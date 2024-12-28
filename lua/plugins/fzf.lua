@@ -27,6 +27,7 @@ return {
     config.defaults.actions.files["ctrl-t"] = require("trouble.sources.fzf").actions.open
 
     return {
+      fzf_colors = true,
       defaults = {
         formatter = "path.filename_first",
       },

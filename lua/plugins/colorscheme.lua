@@ -1,28 +1,36 @@
 return {
-  "catppuccin/nvim",
-  config = function()
-    require("catppuccin").setup({
+  {
+    "catppuccin/nvim",
+    lazy = true,
+    name = "catppuccin",
+    opts = {
       transparent_background = true,
-      no_italic = true,
-      default_integrations = true,
+      no_italic = false,
       integrations = {
-        neotree = true,
+        flash = true,
         fzf = true,
+        gitsigns = true,
+        headlines = true,
+        lsp_trouble = true,
+        mason = true,
+        markdown = true,
+        native_lsp = {
+          enabled = true,
+          underlines = {
+            errors = { "undercurl" },
+            hints = { "undercurl" },
+            warnings = { "undercurl" },
+            information = { "undercurl" },
+          },
+        },
+        neotest = true,
+        neotree = true,
+        noice = true,
+        semantic_tokens = true,
+        snacks = true,
         treesitter = true,
+        treesitter_context = true,
       },
-      custom_highlights = function(colors)
-        return {
-          TabLineSelSeparator = { fg = colors.yellow, bg = colors.base },
-          TabLineSelSeparatorInv = { bg = colors.yellow, fg = colors.base },
-          TabLineSeparator = { fg = colors.surface1, bg = colors.base },
-          TabLineSeparatorInv = { fg = colors.base, bg = colors.surface1 },
-          TabLine = { bg = colors.base },
-          CursorLine = { bg = "None" },
-          FzfLuaCursorLine = { bg = colors.surface0 },
-        }
-      end,
-    })
-
-    vim.cmd.colorscheme("catppuccin-mocha")
-  end,
+    },
+  },
 }

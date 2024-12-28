@@ -5,7 +5,7 @@ return {
       {
         "<leader>gg",
         function()
-          -- should get the root git folder
+          ---@diagnostic disable-next-line: missing-fields
           require("snacks").lazygit({ cwd = vim.fn.getcwd() })
         end,
         { desc = "Lazygit (Root Dir)" },
@@ -37,6 +37,20 @@ return {
           require("snacks").lazygit.log()
         end,
         { desc = "Lazygit Log (cwd)" },
+      },
+      {
+        "<leader>gb",
+        function()
+          require("snacks").git.blame_line()
+        end,
+        { desc = "Git blame line" },
+      },
+      {
+        "<leader>bo",
+        function()
+          require("snacks").bufdelete.other()
+        end,
+        { desc = "Close other buffers" },
       },
     },
     opts = {
