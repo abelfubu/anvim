@@ -12,6 +12,13 @@ return {
     { "<leader>sh", "<cmd>FzfLua helptags<CR>", { desc = "Fzf helptags" } },
     { "gr", "<cmd>FzfLua lsp_references<CR>", { desc = "Fzf lsp references" } },
     { "<leader>ca", "<cmd>FzfLua lsp_code_actions<CR>", { desc = "Fzf lsp code actions" } },
+    {
+      "<leader>fc",
+      function()
+        require("fzf-lua").files({ cwd = vim.fn.stdpath("config") })
+      end,
+      { desc = "Fzf lua files" },
+    },
   },
   opts = function()
     local config = require("fzf-lua.config")
@@ -34,6 +41,9 @@ return {
       winopts = {
         preview = {
           hidden = "hidden",
+        },
+        treesitter = {
+          enable = true,
         },
       },
       fzf_args = "--no-header",

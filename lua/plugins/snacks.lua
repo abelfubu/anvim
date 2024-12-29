@@ -55,6 +55,18 @@ return {
     },
     opts = {
       lazygit = {},
+      dashboard = {
+        width = 78,
+        sections = {
+          {
+            section = "terminal",
+            cmd = vim.fn.stdpath("config") .. "/assets/space_invaders.ps1",
+            padding = 1,
+            height = 10,
+          },
+          { { section = "keys", gap = 1, padding = 1 } },
+        },
+      },
     },
   },
 }

@@ -6,7 +6,13 @@
         "language": [
           "typescript"
         ],
-        "path": "snippets/wke.json"
+        "path": "snippets/typescript.json"
+      },
+      {
+        "language": [
+          "all"
+        ],
+        "path": "snippets/json.json"
       }
     ]
   }

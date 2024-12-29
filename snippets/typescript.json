@@ -31,4 +31,3 @@
     "description": "Creates a Jest test suite for an Angular service, allowing you to set the class name and move to complete the test description."
   }
 }
-

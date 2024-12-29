@@ -18,9 +18,18 @@ map("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", remap = true })
 map("n", "<leader>|", "<C-W>v", { desc = "Split Window Right", remap = true })
 
 -- Move Lines
-vim.keymap.set("n", "<Up>", "mz:m-2<CR>`z==", { noremap = true, silent = true })
-vim.keymap.set("n", "<Down>", "mz:m+<CR>`z==", { noremap = true, silent = true })
-vim.keymap.set("i", "<Down>", "<Esc>:m+<CR>==gi", { noremap = true, silent = true })
-vim.keymap.set("i", "<Up>", "<Esc>:m-2<CR>==gi", { noremap = true, silent = true })
-vim.keymap.set("v", "<Down>", ":m'>+<CR>gv=`<my`>mzgv`yo`z", { noremap = true, silent = true })
-vim.keymap.set("v", "<Up>", ":m'<-2<CR>gv=`>my`<mzgv`yo`z", { noremap = true, silent = true })
+map("n", "<Up>", "mz:m-2<CR>`z==", { noremap = true, silent = true })
+map("n", "<Down>", "mz:m+<CR>`z==", { noremap = true, silent = true })
+map("i", "<Down>", "<Esc>:m+<CR>==gi", { noremap = true, silent = true })
+map("i", "<Up>", "<Esc>:m-2<CR>==gi", { noremap = true, silent = true })
+map("v", "<Down>", ":m'>+<CR>gv=`<my`>mzgv`yo`z", { noremap = true, silent = true })
+map("v", "<Up>", ":m'<-2<CR>gv=`>my`<mzgv`yo`z", { noremap = true, silent = true })
+
+-- Indenting
+map("v", "<", "<gv")
+map("v", ">", ">gv")
+
+-- Diagnostics
+map("n", "<leader>cd", function()
+  vim.diagnostic.open_float(nil, { border = "rounded" })
+end, { desc = "Line Diagnostics" })
