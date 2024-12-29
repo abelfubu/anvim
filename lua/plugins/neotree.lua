@@ -4,26 +4,28 @@ return {
     branch = "v3.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "nvim-tree/nvim-web-devicons",
       "MunifTanjim/nui.nvim",
     },
     keys = {
-      { "<leader>e", "<cmd>Neotree toggle<CR>", { desc = "Neotree toggle" } },
+      {
+        "<leader>e",
+        function()
+          require("neo-tree.command").execute({ toggle = true })
+        end,
+        { desc = "Neotree toggle" },
+      },
     },
     opts = {
+      filesystem = {
+        follow_current_file = {
+          enabled = true,
+        },
+      },
       popup_border_style = "rounded",
       window = {
         position = "right",
         width = 75,
-        -- mappings = {
-        --   ["s"] = function(state)
-        --     local node = state.tree:get_node()
-        --     if node.type == "file" then
-        --       vim.cmd("Neotree open_vsplit")
-        --       vim.cmd("Neotree close")
-        --     end
-        --   end,
-        -- },
       },
     },
   },

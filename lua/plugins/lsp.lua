@@ -28,7 +28,7 @@ return {
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
         vim.keymap.set("n", "R", vim.lsp.buf.rename, opts)
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-        vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+
         vim.diagnostic.config({
           virtual_text = true,
           underline = true,
@@ -42,6 +42,7 @@ return {
           },
         })
       end
+
       require("mason-lspconfig").setup_handlers({
         function(server_name)
           require("lspconfig")[server_name].setup({

@@ -24,3 +24,4 @@ require("lazy").setup({
 })
 
 vim.cmd.colorscheme("catppuccin-mocha")
+require("fzf-lua").register_ui_select()

@@ -1,6 +1,10 @@
 local map = vim.keymap.set
 
+-- Save
 map("n", "<C-s>", "<cmd>:wa<cr>")
+map("i", "<C-s>", "<cmd>:wa<cr>")
+map("v", "<C-s>", "<cmd>:wa<cr>")
+
 map("n", "<leader>qq", "<cmd>:qa!<cr>")
 map("t", "<Esc><Esc>", "<C-\\><C-n>")
 map("n", "<C-x>", "<cmd>bd!<CR>")

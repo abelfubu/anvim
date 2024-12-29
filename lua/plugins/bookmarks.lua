@@ -13,6 +13,7 @@ end
 
 local function parse_bookmarks(file_path)
   local file = io.open(file_path, "r")
+
   if not file then
     error("Could not open Brave bookmarks file")
   end
@@ -28,7 +29,6 @@ local function parse_bookmarks(file_path)
       table.insert(bookmarks, { name = node.name, url = node.url })
     elseif node.children then
       for _, child in ipairs(node.children) do
-        print("child", child.name)
         extract_bookmarks(child)
       end
     else
@@ -42,41 +42,28 @@ local function parse_bookmarks(file_path)
   return bookmarks
 end
 
-local function open_url(url)
-  local os_name = vim.uv.os_uname().sysname
-  local cmd
-  if os_name == "Linux" then
-    cmd = "xdg-open '" .. url .. "'"
-  elseif os_name == "Windows_NT" then
-    cmd = "start " .. url
-  elseif os_name == "Darwin" then
-    cmd = "open '" .. url .. "'"
-  else
-    error("Unsupported OS")
-  end
-  os.execute(cmd)
-end
-
 local function show_bookmarks()
   local bookmarks_file = get_bookmarks_path()
   local bookmarks = parse_bookmarks(bookmarks_file)
   local max_width = 80
 
-  require("fzf-lua").fzf_exec(
-    vim.tbl_map(function(b)
+  vim.ui.select(bookmarks, {
+    prompt = "Bookmarks> ",
+    format_item = function(b)
       local name = b.name:sub(1, max_width - 1)
       return string.format("%-" .. max_width .. "s %s", name, b.url)
-    end, bookmarks),
-    {
-      actions = {
-        ["default"] = function(selected)
-          local url = selected[1]:sub(max_width + 2)
-          print(url)
-          open_url(url)
-        end,
-      },
-    }
-  )
+    end,
+  }, function(selected)
+    if selected then
+      vim.ui.open(selected.url)
+      return
+    end
+
+    local query = require("fzf-lua").get_last_query()
+    if query ~= "" then
+      vim.ui.open("https://" .. require("fzf-lua").get_last_query())
+    end
+  end)
 end
 
 vim.keymap.set("n", "<leader>sB", function()

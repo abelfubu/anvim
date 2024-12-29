@@ -3,7 +3,10 @@ vim.opt.tabstop = 2
 vim.opt.clipboard = "unnamedplus"
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.wrap = false
+vim.opt.fileformat = "unix"
 
+-- Do not show tab characters
 vim.opt.list = false
 
 if vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
