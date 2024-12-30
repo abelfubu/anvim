@@ -1,5 +1,6 @@
 return {
   "ibhagwan/fzf-lua",
+	-- stylua: ignore
   keys = {
     { "<leader><leader>", "<cmd>FzfLua files<CR>", { desc = "Fzf Find files" } },
     { "<leader>sl", "<cmd>FzfLua live_grep<CR>", { desc = "Fzf live grep" } },
@@ -12,13 +13,13 @@ return {
     { "<leader>sh", "<cmd>FzfLua helptags<CR>", { desc = "Fzf helptags" } },
     { "gr", "<cmd>FzfLua lsp_references<CR>", { desc = "Fzf lsp references" } },
     { "<leader>ca", "<cmd>FzfLua lsp_code_actions<CR>", { desc = "Fzf lsp code actions" } },
-    {
-      "<leader>fc",
-      function()
-        require("fzf-lua").files({ cwd = vim.fn.stdpath("config") })
-      end,
-      { desc = "Fzf lua files" },
-    },
+    { "<leader>ca", "<cmd>FzfLua lsp_code_actions<CR>", { desc = "Fzf lsp code actions" } },
+    { "<leader>fc", function() require("fzf-lua").files({ cwd = vim.fn.stdpath("config") }) end, { desc = "Fzf lua files" } },
+		{ "<leader>gs", "<cmd>FzfLua git_status<CR>", { desc = "Git status" } },
+		{ "<leader>gB", "<cmd>FzfLua git_branches<CR>", { desc = "Git branches" } },
+		{ "<leader>gc", "<cmd>FzfLua git_bcommits<CR>", { desc = "Git buffer commits" } },
+		{ "<leader>gC", "<cmd>FzfLua git_commits<CR>", { desc = "Git commits" } },
+		{ "<leader>ff", "<cmd>FzfLua<CR>", { desc = "Fzf builtins" } },
   },
   opts = function()
     local config = require("fzf-lua.config")

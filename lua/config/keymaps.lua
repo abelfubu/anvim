@@ -16,6 +16,7 @@ map("n", "<C-l>", "<C-w>l")
 map("n", "<C-h>", "<C-w>h")
 map("n", "<C-k>", "<C-w>k")
 map("n", "<C-j>", "<C-w>j")
+map("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
 
 -- Splits
 map("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", remap = true })
@@ -37,3 +38,7 @@ map("v", ">", ">gv")
 map("n", "<leader>cd", function()
   vim.diagnostic.open_float(nil, { border = "rounded" })
 end, { desc = "Line Diagnostics" })
+
+-- Terminal
+map("t", "<C-/>", "<cmd>close<cr>", { desc = "Hide Terminal" })
+map("t", "<c-_>", "<cmd>close<cr>", { desc = "which_key_ignore" })

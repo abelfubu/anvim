@@ -1,5 +1,17 @@
 return {
-  { "datsfilipe/vesper.nvim", opts = { transparent = true } },
+  {
+    "datsfilipe/vesper.nvim",
+    opts = {
+      transparent = true,
+      italics = {
+        comments = false,
+        keywords = false,
+        functions = false,
+        strings = false,
+        variables = false,
+      },
+    },
+  },
   {
     "catppuccin/nvim",
     lazy = true,
