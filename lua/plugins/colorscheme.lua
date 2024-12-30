@@ -1,5 +1,19 @@
 return {
   {
+    "AlexvZyl/nordic.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("nordic").load()
+    end,
+  },
+  {
+    "bettervim/yugen.nvim",
+    config = function()
+      vim.cmd.colorscheme("yugen")
+    end,
+  },
+  {
     "datsfilipe/vesper.nvim",
     opts = {
       transparent = true,
@@ -41,6 +55,7 @@ return {
         noice = true,
         semantic_tokens = true,
         snacks = true,
+        blink_cmp = true,
         treesitter = true,
         treesitter_context = true,
       },

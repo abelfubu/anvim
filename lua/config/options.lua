@@ -4,7 +4,6 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.wrap = false
-vim.opt.fileformat = "unix"
 
 -- Do not show tab characters
 vim.opt.list = false

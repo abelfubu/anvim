@@ -22,7 +22,7 @@ return {
               "mode",
               padding = { left = 1, right = 0 },
               separator = { left = "", right = "" },
-              color = { fg = mocha.blue, gui = "bold", bg = mocha.base },
+              color = { fg = mocha.blue, gui = "bold", bg = "None" },
               fmt = function(str)
                 local modeMap = {
                   NORMAL = " ",
@@ -45,7 +45,7 @@ return {
               icon = { "󰊢", align = "left" },
               separator = { left = "", right = "" },
               padding = { left = 2, right = 0 },
-              color = { fg = mocha.yellow, gui = "bold", bg = mocha.base },
+              color = { fg = mocha.yellow, gui = "bold", bg = "None" },
             },
           },
           lualine_c = {
@@ -72,17 +72,6 @@ return {
               end,
               separator = { left = "", right = "" },
             },
-            {
-              function()
-                local rec = vim.fn.reg_recording()
-                if rec ~= "" then
-                  return "󰑋 @" .. rec
-                end
-                return ""
-              end,
-              color = { fg = "#ff9e64", gui = "bold" }, -- Customize color as needed
-              separator = { left = "", right = "" },
-            },
           },
           lualine_x = {
             {
@@ -103,6 +92,29 @@ return {
                 end
               end,
             },
+            {
+              cond = function()
+                return vim.fn.reg_recording() ~= ""
+              end,
+              function()
+                -- return "󰑋"
+                return "󰄀"
+              end,
+              separator = { left = "", right = "" },
+              color = { bg = mocha.red, fg = mocha.base },
+              padding = { left = 0, right = 1 },
+            },
+            {
+              function()
+                local rec = vim.fn.reg_recording()
+                if rec ~= "" then
+                  return "@" .. rec
+                end
+                return ""
+              end,
+              color = { fg = mocha.red, gui = "bold" },
+              separator = { left = "", right = "" },
+            },
           },
           lualine_y = {
             {
@@ -110,7 +122,7 @@ return {
               separator = { left = "", right = "" },
               padding = { left = 0, right = 1 },
               fmt = function()
-                return ""
+                return ""
               end,
               color = { fg = mocha.base, bg = mocha.yellow },
             },
@@ -118,12 +130,12 @@ return {
               "progress",
               separator = { left = "", right = "" },
               padding = { left = 1, right = 1 },
-              color = { fg = mocha.yellow, bg = mocha.base },
+              color = { fg = mocha.yellow, bg = "None" },
             },
             {
               "location",
               padding = { left = 0, right = 1 },
-              color = { fg = mocha.yellow, bg = mocha.base },
+              color = { fg = mocha.yellow, bg = "None" },
             },
           },
           lualine_z = {
@@ -140,7 +152,7 @@ return {
               function()
                 local clients = vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })
                 if #clients == 0 then
-                  return ""
+                  return ""
                 end
 
                 local lspMap = {
@@ -162,7 +174,7 @@ return {
                 return table.concat(names, " ")
               end,
               separator = { left = "", right = "" },
-              color = { fg = mocha.blue, bg = mocha.base },
+              color = { fg = mocha.blue, bg = "None" },
             },
           },
         },

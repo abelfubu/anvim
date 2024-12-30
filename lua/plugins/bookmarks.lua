@@ -66,8 +66,7 @@ local function show_bookmarks()
   end)
 end
 
-vim.keymap.set("n", "<leader>sB", function()
-  show_bookmarks()
-end)
+-- stylua: ignore
+vim.keymap.set("n", "<leader>sB", function() show_bookmarks() end, { desc = "Bookmarks" })
 
 return {}

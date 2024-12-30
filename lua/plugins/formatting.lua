@@ -1,11 +1,34 @@
 return {
   {
     "stevearc/conform.nvim",
-    opts = {
-      format_on_save = {
-        timeout_ms = 500,
-        lsp_format = "fallback",
+    keys = {
+      {
+        "<leader>cf",
+        function()
+          local options = vim.g.disable_autoformat and { "Enable", "Disable" } or { "Disable", "Enable" }
+
+          vim.ui.select(
+            options,
+            { prompt = "Format status " .. (vim.g.disable_autoformat and "disabled" or "enabled").. "> " },
+            function(choice)
+              if choice == "Enable" then
+                vim.g.disable_autoformat = false
+              else
+                vim.g.disable_autoformat = true
+              end
+            end
+          )
+        end,
+        desc = "Format status",
       },
+    },
+    opts = {
+      format_on_save = function()
+        if vim.g.disable_autoformat then
+          return
+        end
+        return { timeout_ms = 500, lsp_format = "fallback" }
+      end,
       formatters_by_ft = {
         lua = { "stylua" },
         python = { "isort", "black" },

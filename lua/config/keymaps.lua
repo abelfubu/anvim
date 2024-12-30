@@ -1,9 +1,7 @@
 local map = vim.keymap.set
 
--- Save
-map("n", "<C-s>", "<cmd>:wa<cr>")
-map("i", "<C-s>", "<cmd>:wa<cr>")
-map("v", "<C-s>", "<cmd>:wa<cr>")
+-- save file
+map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 
 map("n", "<leader>qq", "<cmd>:qa!<cr>")
 map("t", "<Esc><Esc>", "<C-\\><C-n>")
@@ -17,6 +15,12 @@ map("n", "<C-h>", "<C-w>h")
 map("n", "<C-k>", "<C-w>k")
 map("n", "<C-j>", "<C-w>j")
 map("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
+
+-- Resize windows
+map("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
+map("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
+map("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
+map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
 
 -- Splits
 map("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", remap = true })

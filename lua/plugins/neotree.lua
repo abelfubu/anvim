@@ -9,7 +9,7 @@ return {
     },
     keys = {
 			-- stylua: ignore
-      { "<leader>e", function() require("neo-tree.command").execute({ toggle = true }) end, { desc = "Neotree toggle" } },
+      { "<leader>e", function() require("neo-tree.command").execute({ toggle = true }) end, desc = "Neotree toggle" },
     },
     opts = function(_, opts)
       local function on_move(data)

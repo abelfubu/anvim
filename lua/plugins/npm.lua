@@ -128,6 +128,6 @@ local function fuzzy_npm_search()
   })
 end
 
-vim.keymap.set("n", "<leader>np", fuzzy_npm_search, { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>np", fuzzy_npm_search, { noremap = true, silent = true, desc = "Npm list packages" })
 
 return {}
