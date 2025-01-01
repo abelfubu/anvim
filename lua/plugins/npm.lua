@@ -26,15 +26,6 @@ local function fetch_data(package, callback)
   end
 end
 
--- Usage
--- local cancel_fetch = fetch_data("@angular/core", function(result, err)
---   if result then
---     print(vim.inspect(vim.json.decode(result).objects[1]))
---   else
---     print("Error:", err)
---   end
--- end)
---
 M.get_package_json = function()
   local cwd = vim.fn.getcwd()
   local file_path = string.format("%s/package.json", cwd)
@@ -78,17 +69,22 @@ function MyPreviewer:populate_preview_buf(entry_str)
     cancel_current_job = nil
   end
 
-  cancel_current_job = fetch_data(vim.split(entry_str, " ")[1], function(result, err)
+  local entry = vim.split(entry_str, " ")
+
+  cancel_current_job = fetch_data(entry[1], function(result, err)
     vim.schedule(function()
       if result then
         local package = vim.json.decode(result).objects[1].package
 
         vim.api.nvim_buf_set_lines(tmpbuf, 0, -1, false, {
+          "[ctrl-i] install new version | [ctrl-f] force install new version",
+          "",
           "# " .. string.upper(package.name),
           "",
           package.description,
           "LICENSE: " .. package.license,
-          "VERSION: " .. package.version,
+          "CURRENT VERSION: " .. entry[#entry],
+          "LAST VERSION: " .. package.version,
           "LAST UPDATE: " .. package.date:sub(0, 10),
         })
         vim.bo[tmpbuf].filetype = "markdown"
@@ -110,22 +106,28 @@ function MyPreviewer:gen_winopts()
 end
 
 local function fuzzy_npm_search()
-  require("fzf-lua").fzf_exec(function(cb)
+  local fzf_lua = require("fzf-lua")
+
+  local opts = {
+    actions = {
+      ["default"] = function(selected)
+        local package = selected[1]:match("^[^%s]+")
+        os.execute("start https://www.npmjs.com/package/" .. package)
+      end,
+      ["ctrl-i"] = function(selected)
+        print(vim.inspect(selected))
+      end,
+    },
+    previewer = MyPreviewer,
+  }
+
+  fzf_lua.fzf_exec(function(cb)
     local packages = M.get_package_json()
-    print(vim.inspect(packages))
     for package, version in pairs(packages) do
       cb(string.format("%-37s %s", package:sub(0, 36), version))
     end
     cb()
-  end, {
-    actions = {
-      ["default"] = function(selected)
-        local package = selected[1]
-        os.execute("start https://www.npmjs.com/package/" .. package)
-      end,
-    },
-    previewer = MyPreviewer,
-  })
+  end, opts)
 end
 
 vim.keymap.set("n", "<leader>np", fuzzy_npm_search, { noremap = true, silent = true, desc = "Npm list packages" })

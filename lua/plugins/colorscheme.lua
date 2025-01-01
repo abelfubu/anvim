@@ -1,32 +1,5 @@
 return {
   {
-    "AlexvZyl/nordic.nvim",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require("nordic").load()
-    end,
-  },
-  {
-    "bettervim/yugen.nvim",
-    config = function()
-      vim.cmd.colorscheme("yugen")
-    end,
-  },
-  {
-    "datsfilipe/vesper.nvim",
-    opts = {
-      transparent = true,
-      italics = {
-        comments = false,
-        keywords = false,
-        functions = false,
-        strings = false,
-        variables = false,
-      },
-    },
-  },
-  {
     "catppuccin/nvim",
     lazy = true,
     name = "catppuccin",
@@ -58,6 +31,36 @@ return {
         blink_cmp = true,
         treesitter = true,
         treesitter_context = true,
+      },
+      custom_highlights = function(colors)
+        return { BlinkCmpMenuBorder = { fg = colors.blue } }
+      end,
+    },
+  },
+  {
+    "AlexvZyl/nordic.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      -- require("nordic").load()
+    end,
+  },
+  {
+    "bettervim/yugen.nvim",
+    config = function()
+      -- vim.cmd.colorscheme("yugen")
+    end,
+  },
+  {
+    "datsfilipe/vesper.nvim",
+    opts = {
+      transparent = true,
+      italics = {
+        comments = false,
+        keywords = false,
+        functions = false,
+        strings = false,
+        variables = false,
       },
     },
   },

@@ -1,7 +1,13 @@
 return {
   {
     "saghen/blink.cmp",
-    dependencies = "rafamadriz/friendly-snippets",
+    dependencies = {
+      {
+        -- "Exafunction/codeium.nvim",
+        "aliaksandr-trush/codeium.nvim",
+        "rafamadriz/friendly-snippets",
+      },
+    },
     version = "*",
     opts = {
       keymap = { preset = "default" },
@@ -11,7 +17,12 @@ return {
       },
       completion = {
         menu = { border = "rounded" },
-        documentation = { window = { border = "rounded" }, auto_show = true },
+        documentation = {
+          window = {
+            border = "rounded",
+          },
+          auto_show = true,
+        },
       },
       signature = { enabled = true, window = { border = "rounded" } },
       snippets = {
@@ -29,7 +40,10 @@ return {
         end,
       },
       sources = {
-        default = { "lsp", "path", "luasnip", "buffer" },
+        default = { "lsp", "path", "luasnip", "buffer", "codeium" },
+        providers = {
+          codeium = { name = "Codeium", module = "codeium.blink", async = true },
+        },
       },
     },
   },

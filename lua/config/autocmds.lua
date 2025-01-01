@@ -14,7 +14,6 @@ vim.api.nvim_create_autocmd("TermOpen", {
   end,
 })
 
-
 -- close some filetypes with <q>
 vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("close_with_q", { clear = true }),

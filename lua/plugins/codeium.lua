@@ -1,6 +1,8 @@
 return {
   {
-    "Exafunction/codeium.nvim",
+    -- "Exafunction/codeium.nvim",
+    "aliaksandr-trush/codeium.nvim",
+    branch = "blink",
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
@@ -8,7 +10,7 @@ return {
       workspace_root = { use_lsp = true },
       enable_cmp_source = false,
       virtual_text = {
-        enabled = true,
+        enabled = false,
       },
     },
   },

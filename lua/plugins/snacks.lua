@@ -22,16 +22,17 @@ return {
     opts = {
       -- indent = { enabled = true, animate = { enabled = false } },
       lazygit = { enabled = true },
-      zen = { enabled = true },
+      zen = { enabled = true, toggles = { dim = false } },
       -- notifier = { enabled = true },
       terminal = { enabled = true },
+      dim = { enabled = false },
       dashboard = {
         width = 78,
         sections = {
           {
             section = "terminal",
-            cmd = vim.fn.stdpath("config") .. "/assets/space_invaders.ps1",
             padding = 1,
+            cmd = vim.fn.stdpath("config") .. "/assets/space_invaders.ps1",
             height = 10,
           },
           { { section = "keys", gap = 1, padding = 1 } },

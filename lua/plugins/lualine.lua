@@ -1,11 +1,62 @@
+local mocha = require("catppuccin.palettes").get_palette("mocha")
+
+local get_icon_by_lsp = function(client_name)
+  local lsp_map = {
+    angularls = "󰚿",
+    lua_ls = "󰢱",
+    eslint = "",
+    vtsls = "",
+    gopls = "",
+    tsserver = "",
+    cssls = "",
+    rustls = "󱘗",
+    html = "",
+    emmet_ls = "󰟛",
+    jsonls = "",
+  }
+
+  return lsp_map[client_name] or "uknown-lsp"
+end
+
+---@class LualineItem
+---@field color string
+---@field value function|string
+---@field icon function|string
+---@field format? function
+
+---Creates a lua line item
+---@param items LualineItem[]
+local create_lualine_items = function(items)
+  local result = {}
+
+  for _, item in ipairs(items) do
+    table.insert(result, {
+      type(item.icon) == "function" and item.icon or function()
+        return item.icon
+      end,
+      separator = { left = "", right = "" },
+      padding = { left = 0, right = 1 },
+      color = { fg = mocha.base, bg = item.color },
+    })
+
+    table.insert(result, {
+      item.value,
+      color = { fg = item.color, bg = "None", gui = "bold" },
+      fmt = item.format,
+    })
+  end
+
+  return result
+end
+
 return {
+
   {
     "nvim-lualine/lualine.nvim",
     enabled = true,
     event = "VeryLazy",
     opts = function()
       local lualine_require = require("lualine_require")
-      local mocha = require("catppuccin.palettes").get_palette("mocha")
 
       lualine_require.require = require
 
@@ -21,7 +72,7 @@ return {
             {
               "mode",
               padding = { left = 1, right = 0 },
-              separator = { left = "", right = "" },
+              separator = "",
               color = { fg = mocha.blue, gui = "bold", bg = "None" },
               fmt = function(str)
                 local modeMap = {
@@ -43,43 +94,22 @@ return {
             {
               "branch",
               icon = { "󰊢", align = "left" },
-              separator = { left = "", right = "" },
-              padding = { left = 2, right = 0 },
+              separator = "",
+              padding = { left = 1, right = 1 },
               color = { fg = mocha.yellow, gui = "bold", bg = "None" },
             },
           },
           lualine_c = {
             {
               "diagnostics",
-              symbols = {
-                -- error = icons.diagnostics.Error,
-                -- warn = icons.diagnostics.Warn,
-                -- info = icons.diagnostics.Info,
-                -- hint = icons.diagnostics.Hint,
-              },
-              separator = { left = "", right = "" },
+              separator = "",
             },
-            { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-            {
-              "filename",
-              path = 0,
-              fmt = function(name)
-                if name == "[No Name]" then
-                  return ""
-                end
-
-                return name
-              end,
-              separator = { left = "", right = "" },
-            },
-          },
-          lualine_x = {
             {
               "diff",
               symbols = {
-                -- added = icons.git.added,
-                -- modified = icons.git.modified,
-                -- removed = icons.git.removed,
+                added = " ",
+                modified = " ",
+                removed = " ",
               },
               source = function()
                 local gitsigns = vim.b.gitsigns_status_dict
@@ -92,6 +122,8 @@ return {
                 end
               end,
             },
+          },
+          lualine_x = {
             {
               cond = function()
                 return vim.fn.reg_recording() ~= ""
@@ -116,67 +148,43 @@ return {
               separator = { left = "", right = "" },
             },
           },
-          lualine_y = {
+          lualine_y = create_lualine_items({
             {
-              "",
-              separator = { left = "", right = "" },
-              padding = { left = 0, right = 1 },
-              fmt = function()
-                return ""
+              color = mocha.yellow,
+              icon = function()
+                return vim.g.disable_autoformat and "" or ""
               end,
-              color = { fg = mocha.base, bg = mocha.yellow },
-            },
-            {
-              "progress",
-              separator = { left = "", right = "" },
-              padding = { left = 1, right = 1 },
-              color = { fg = mocha.yellow, bg = "None" },
-            },
-            {
-              "location",
-              padding = { left = 0, right = 1 },
-              color = { fg = mocha.yellow, bg = "None" },
-            },
-          },
-          lualine_z = {
-            {
-              "",
-              separator = { left = "", right = "" },
-              padding = { left = 0, right = 0 },
-              color = { fg = mocha.base, bg = mocha.blue },
-              fmt = function()
-                return "  "
+              value = function()
+                return ""
               end,
             },
+          }),
+          lualine_z = create_lualine_items({
             {
-              function()
+              color = mocha.blue,
+              icon = "󰗊",
+              value = function()
                 local clients = vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })
+
                 if #clients == 0 then
-                  return ""
+                  return " "
                 end
 
-                local lspMap = {
-                  angularls = "󰚿",
-                  lua_ls = "󰢱",
-                  eslint = "",
-                  vtsls = "",
-                  gopls = "",
-                  tsserver = "",
-                  cssls = "",
-                  rustls = "󱘗",
-                }
+                local names = vim.tbl_map(function(client)
+                  return get_icon_by_lsp(client.name)
+                end, clients)
 
-                local names = {}
-                for _, client in ipairs(clients) do
-                  table.insert(names, lspMap[client.name])
-                end
-
-                return table.concat(names, " ")
+                return table.concat(names, " ") .. " "
               end,
-              separator = { left = "", right = "" },
-              color = { fg = mocha.blue, bg = "None" },
             },
-          },
+            {
+              color = mocha.pink,
+              icon = "󰴊",
+              value = function()
+                return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+              end,
+            },
+          }),
         },
         extensions = { "neo-tree", "lazy" },
       }

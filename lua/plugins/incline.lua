@@ -1,11 +1,14 @@
 return {
   "b0o/incline.nvim",
   event = "BufReadPre",
+  enabled = false,
   priority = 1200,
-  config = function()
+  opts = function()
     local mocha = require("catppuccin.palettes").get_palette("mocha")
+    local helpers = require("incline.helpers")
+    local devicons = require("nvim-web-devicons")
 
-    require("incline").setup({
+    return {
       highlight = {
         groups = {
           InclineNormal = { guibg = mocha.base, guifg = mocha.text },
@@ -14,14 +17,23 @@ return {
       },
       render = function(props)
         local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
-        if vim.bo[props.buf].modified then
-          filename = "[*]" .. filename
+        if filename == "" then
+          filename = "[No Name]"
         end
 
-        local icon, color = require("nvim-web-devicons").get_icon_color(filename)
+        local guibg = mocha.mantle
 
-        return { { icon, guifg = color }, { " " }, { filename } }
+        local ft_icon, ft_color = devicons.get_icon_color(filename)
+        local modified = vim.bo[props.buf].modified
+        return {
+          { "", guifg = ft_color },
+          ft_icon and { "", ft_icon, " ", guibg = ft_color, guifg = helpers.contrast_color(ft_color) } or "",
+          { " " .. filename .. " ", gui = "bold", guibg = guibg },
+          modified and " " or "",
+          { "", guifg = guibg, guibg = mocha.none },
+          guifg = props.focused and mocha.rosewater or mocha.surface2,
+        }
       end,
-    })
+    }
   end,
 }
