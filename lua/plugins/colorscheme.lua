@@ -7,6 +7,7 @@ return {
       transparent_background = true,
       no_italic = false,
       integrations = {
+        dropbar = { enabled = true },
         flash = true,
         fzf = true,
         gitsigns = true,
@@ -33,9 +34,17 @@ return {
         treesitter_context = true,
       },
       custom_highlights = function(colors)
-        return { BlinkCmpMenuBorder = { fg = colors.blue } }
+        return {
+          BlinkCmpMenuBorder = { fg = colors.blue },
+        }
       end,
     },
+  },
+  { "olivercederborg/poimandres.nvim" },
+  {
+    "xero/miasma.nvim",
+    lazy = false,
+    priority = 1000,
   },
   {
     "AlexvZyl/nordic.nvim",

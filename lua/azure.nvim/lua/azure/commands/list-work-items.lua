@@ -6,7 +6,7 @@ function M.list_work_items()
   local teams_list = table.concat(
     vim.tbl_map(function(team)
       return string.format("'%s'", team)
-    end, { "Krypton Team", "Atalaya Team", "Eternia Team", "Castillo Grayskull", "Estación Zeta" }),
+    end, require("azure").config.nodeNames),
     ", "
   )
 

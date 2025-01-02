@@ -32,7 +32,7 @@ return {
           {
             section = "terminal",
             padding = 1,
-            cmd = vim.fn.stdpath("config") .. "/assets/space_invaders.ps1",
+            cmd = "pwsh -NoProfile -Command " .. vim.fn.stdpath("config") .. "/assets/space_invaders.ps1",
             height = 10,
           },
           { { section = "keys", gap = 1, padding = 1 } },
